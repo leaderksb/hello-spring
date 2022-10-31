@@ -2,15 +2,18 @@ package hello.hellospring.service;
 
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemoryMemberRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MemberServiceTest {
 
-    MemberService memberService = new MemberService();
+     MemberService memberService = new MemberService();
     MemoryMemberRepository memberRepository = new MemoryMemberRepository();
 
     @AfterEach  // 메서드가 끝나고 실행. 콜백.
@@ -27,7 +30,7 @@ class MemberServiceTest {
         // when : 이걸로 실행했을 때
         Long saveId = memberService.join(member);
 
-        //then : 이게 실행돼야 돼
+        //then : 결과가 이게 나와야 돼
         Member findMember = memberService.findOne(saveId).get();
         assertThat(member.getName()).isEqualTo(findMember.getName());
     }
@@ -43,18 +46,19 @@ class MemberServiceTest {
 
         // when
         memberService.join(member1);
+        // memberService.join(member2) 로직을 실행할 건데, IllegalStateException 예외가 터져야 함.
         IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));
-//        assertThrows(NullPointerException.class, () -> memberService.join(member2));
 
         assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
 
-//        memberService.join(member1);
-//        try {
-//            memberService.join(member2);
-//            fail();
-//        } catch (IllegalStateException e) {
-//            assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
-//        }
+/*
+        try {
+            memberService.join(member2);
+            fail();
+        } catch (IllegalStateException e) {
+            assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
+        }
+*/
 
         // then
     }

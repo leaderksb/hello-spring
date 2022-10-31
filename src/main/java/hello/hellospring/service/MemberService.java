@@ -16,7 +16,6 @@ public class MemberService {
 
     public Long join(Member member) {
         validateDuplicateMember(member);  // 중복 회원 검증
-
         memberRepository.save(member);
         return member.getId();
     }
@@ -27,11 +26,7 @@ public class MemberService {
         // 직접 꺼내고 싶으면 get으로 꺼내도 되는데, 바로 꺼내는 걸 별로 권장하진 않음.
         memberRepository.findByName(member.getName())  // 반환이 Optional로 꺼내지니까, 바로 ifPresent를 씀.
                 .ifPresent(m -> {  // null이 아니라 어떤 값이 있으면 반환
-                    try {
-                        throw new IllegalAccessException("이미 존재하는 회원입니다.");
-                    } catch (IllegalAccessException e) {
-                        throw new RuntimeException(e);
-                    }
+                        throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });
     }
 
