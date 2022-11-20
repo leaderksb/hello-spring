@@ -4,11 +4,13 @@ import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 /* @Service  // 2. 서비스에서 비즈니스 로직을 만듦. 사실 이 애너테이션은 @Component 이며, @Service 안에 있기 때문에 사용 가능. */
+@Transactional  // 데이터를 저장하거나 변경할 때 트랜잭션이 있어야 함
 public class MemberService {
 
     private final MemberRepository memberRepository;
