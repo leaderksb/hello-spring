@@ -1,5 +1,6 @@
 package hello.hellospring;
 
+import hello.hellospring.aop.TimeTraceApp;
 import hello.hellospring.repository.*;
 import hello.hellospring.service.MemberService;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +38,11 @@ public class SpringConfig {
     public MemberService memberService() {  // MemberService 로직을 호출해서 등록해줌
         return new MemberService(memberRepository);
     }
+
+//    @Bean
+//    public TimeTraceApp timeTraceApp() {
+//        return new TimeTraceApp();
+//    }
 
 //    @Bean  // 스프링 빈에 등록하란 뜻이네 하고 인식
 //    public MemberService memberService() {  // MemberService 로직을 호출해서 등록해줌
